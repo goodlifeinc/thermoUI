@@ -1,0 +1,116 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Lozenec Temp</title>
+
+    <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
+    <!-- Latest compiled and minified plotly.js JavaScript -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script>
+        var data = [];
+        var temp = null;
+        var tempOutside = null;
+
+        function spawnPlotly() {
+            var layout = {
+                xaxis: {
+                    tickformat: '%X - %x',
+                    autorange: true,
+                    range: [data[0].x[0], data[0].x[data[0].x.length - 1]],
+                    rangeselector: {buttons: [
+                        {
+                        count: 1,
+                        label: '1d',
+                        step: 'day',
+                        stepmode: 'backward'
+                        },
+                        {
+                        count: 7,
+                        label: '7d',
+                        step: 'day',
+                        stepmode: 'backward'
+                        },
+                        {step: 'all'}
+                    ]},
+                    rangeslider: {range: [data[0].x[0], data[0].x[data[0].x.length - 1]]},
+                    type: 'date'
+                }
+            };
+            Plotly.newPlot( 'myDiv', data, layout );
+
+            document.getElementById( "temp" ).innerHTML = temp;
+            document.getElementById( "tempOutside" ).innerHTML = tempOutside;
+        }
+        window.onload = function () {
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyBqrYP0Uj2JBR75I8trC7WWTAbh3i8uzok",
+                authDomain: "temperature-4e323.firebaseapp.com",
+                databaseURL: "https://temperature-4e323.firebaseio.com",
+                projectId: "temperature-4e323",
+                storageBucket: "temperature-4e323.appspot.com",
+                messagingSenderId: "18154881415"
+            };
+            firebase.initializeApp( config );
+            // Get a reference to the database service
+            var database = firebase.database().ref( "report" ).limitToFirst( 1000 );
+            var databaseOutside = firebase.database().ref( "reportOutside" ).limitToFirst( 1000 );
+            var trace = [];
+            var trace2 = [];
+
+            database.once( 'value' )
+                .then( function ( snap ) {
+                    trace = snap.val();
+                    var trace = {
+                        x: Object.values( trace ).map( function ( element ) {
+                            var date = new Date( element.created_on.time );
+                            return date;
+                        } ),
+                        y: Object.values( trace ).map( function ( element ) {
+                            return element.value
+                        } ),
+                        name: 'inside'
+
+                    };
+
+                    data[ 0 ] = trace;
+                    temp = trace.y[ trace.y.length - 1 ];
+                    return spawnPlotly();
+                } );
+
+
+            databaseOutside.once( 'value' )
+                .then( function ( snap ) {
+                    trace = snap.val();
+                    var trace = {
+                        x: Object.values( trace ).map( function ( element ) {
+                            var date = new Date( element.created_on.time );
+                            return date;
+                        } ),
+                        y: Object.values( trace ).map( function ( element ) {
+                            return element.value
+                        } ),
+                        name: 'outside'
+                    };
+
+                    data[ 1 ] = trace;
+                    tempOutside = trace.y[ trace.y.length - 1 ];
+                    return spawnPlotly();
+                } );
+
+        };
+    </script>
+</head>
+
+<body>
+    <h1>Temp: <span id="temp">fetching...</span></h1>
+    <h2>Outside: <span id="tempOutside">fetching...</span></h2>
+    <div id="myDiv"></div>
+</body>
+
+</html>

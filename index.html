@@ -8,13 +8,13 @@
     <title>Lozenec Temp</title>
 
     <style>
-    .plot {
+    /* .plot {
         flex: 2;
     }
     .plot-holder {
         display: flex;
         flex-direction: row;
-    }
+    } */
     </style>
 
     <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
@@ -61,7 +61,6 @@
         }
         window.onload = function () {
             // Initialize Firebase
-            console.log(window.firebaseConfig);
             firebase.initializeApp( window.firebaseConfig );
             // Get a reference to the database service
             var database = firebase.database().ref( "report" ).limitToFirst( 1000 );

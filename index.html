@@ -7,9 +7,20 @@
 
     <title>Lozenec Temp</title>
 
+    <style>
+    .plot {
+        flex: 2;
+    }
+    .plot-holder {
+        display: flex;
+        flex-direction: row;
+    }
+    </style>
+
     <script src="https://www.gstatic.com/firebasejs/5.7.2/firebase.js"></script>
     <!-- Latest compiled and minified plotly.js JavaScript -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="/config.js"></script>
 
     <script>
         var data = [];
@@ -42,21 +53,16 @@
                 }
             };
             Plotly.newPlot( 'myDiv', data, layout );
+            Plotly.newPlot( 'onlyIn', [data[0]], layout );
+            Plotly.newPlot( 'onlyOut', [data[1]], layout );
 
             document.getElementById( "temp" ).innerHTML = temp;
             document.getElementById( "tempOutside" ).innerHTML = tempOutside;
         }
         window.onload = function () {
             // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyBqrYP0Uj2JBR75I8trC7WWTAbh3i8uzok",
-                authDomain: "temperature-4e323.firebaseapp.com",
-                databaseURL: "https://temperature-4e323.firebaseio.com",
-                projectId: "temperature-4e323",
-                storageBucket: "temperature-4e323.appspot.com",
-                messagingSenderId: "18154881415"
-            };
-            firebase.initializeApp( config );
+            console.log(window.firebaseConfig);
+            firebase.initializeApp( window.firebaseConfig );
             // Get a reference to the database service
             var database = firebase.database().ref( "report" ).limitToFirst( 1000 );
             var databaseOutside = firebase.database().ref( "reportOutside" ).limitToFirst( 1000 );
@@ -110,7 +116,11 @@
 <body>
     <h1>Temp: <span id="temp">fetching...</span></h1>
     <h2>Outside: <span id="tempOutside">fetching...</span></h2>
-    <div id="myDiv"></div>
+    <div class="plot-holder">
+        <div class="plot" id="onlyIn"></div>
+        <div class="plot" id="onlyOut"></div>
+        <div class="plot" id="myDiv"></div>
+    </div>
 </body>
 
 </html>

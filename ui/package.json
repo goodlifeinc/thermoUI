@@ -27,7 +27,8 @@
     "eslint-config-synacor": "^1.1.0",
     "if-env": "^1.0.0",
     "ify-loader": "^1.1.0",
-    "preact-cli": "^2.0.0"
+    "preact-cli": "^2.0.0",
+    "uglifyjs-webpack-plugin": "^1.0.0"
   },
   "dependencies": {
     "preact": "^8.2.1",

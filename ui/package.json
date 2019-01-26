@@ -31,9 +31,11 @@
     "uglifyjs-webpack-plugin": "^1.0.0"
   },
   "dependencies": {
+    "firebase": "^5.8.1",
+    "plotly.js-dist": "^1.44.1",
     "preact": "^8.2.1",
     "preact-compat": "^3.17.0",
-    "preact-router": "^2.5.5",
-    "preact-material-components": "^1.4.3"
+    "preact-material-components": "^1.4.3",
+    "preact-router": "^2.5.5"
   }
 }

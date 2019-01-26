@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-    "build": "preact build",
+    "build": "node --max-old-space-size=4096 node_modules/preact-cli/lib/index.js build",
     "serve": "preact build && preact serve",
     "dev": "preact watch",
     "lint": "eslint src"
@@ -23,10 +23,12 @@
     "build/*"
   ],
   "devDependencies": {
+    "babel-plugin-transform-remove-strict-mode": "0.0.2",
     "eslint": "^4.5.0",
     "eslint-config-synacor": "^1.1.0",
     "if-env": "^1.0.0",
     "ify-loader": "^1.1.0",
+    "imports-loader": "^0.8.0",
     "preact-cli": "^2.0.0",
     "uglifyjs-webpack-plugin": "^1.0.0"
   },

@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-    "build": "node --max-old-space-size=4096 node_modules/preact-cli/lib/index.js build",
+    "build": "node --max-old-space-size=4096 node_modules/preact-cli/lib/index.js build --prerender=false",
     "serve": "preact build && preact serve",
     "dev": "preact watch",
     "lint": "eslint src"

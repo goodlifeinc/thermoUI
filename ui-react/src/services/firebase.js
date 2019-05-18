@@ -5,8 +5,8 @@ import config from '../config/firebase';
 class FirebaseService {
 	constructor( limit = 1000 ) {
 		this.app = firebase.initializeApp(config);
-		this.inside = this.app.database().ref( 'report' ).limitToFirst( limit );
-		this.outside = this.app.database().ref( 'reportOutside' ).limitToFirst( limit );
+		this.inside = this.app.database().ref( 'report' ).limitToLast( limit );
+		this.outside = this.app.database().ref( 'reportOutside' ).limitToLast( limit );
 	}
     
 	async getInside() {

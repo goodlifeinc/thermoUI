@@ -1,1 +1,2 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4139ce8d-cdf3-4ee4-8227-82d9419c8b63/deploy-status)](https://app.netlify.com/sites/gifted-murdock-3da1b0/deploys)
 UI for Temperature app built with [Create React App](https://github.com/facebook/create-react-app).
